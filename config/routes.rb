@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  root "sessions#index"
+
+  resources :sessions, only: [:index, :create, :delete]
+
   resources :tokens
 
   resources :invoices do
@@ -6,6 +10,4 @@ Rails.application.routes.draw do
       get :logout
     end
   end
-
-  root "tokens#index"
 end
