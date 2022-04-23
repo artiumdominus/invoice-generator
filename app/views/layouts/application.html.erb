@@ -12,7 +12,7 @@
 
   <body>
     <% if session[:current_user_token] %>
-      <p style="text-align: right"><%= link_to('Log Out', logout_invoices_path) %></p>
+      <p style="text-align: right"><%= button_to('Log Out', sessions_path, method: :delete) %></p>
     <% end %>
     <%= yield %>
   </body>

@@ -1,13 +1,7 @@
 Rails.application.routes.draw do
   root "sessions#index"
 
-  resources :sessions, only: [:index, :create, :delete]
+  resource :sessions, only: [:index, :create, :destroy]
 
-  resources :tokens
-
-  resources :invoices do
-    collection do
-      get :logout
-    end
-  end
+  resources :tokens, :invoices
 end
