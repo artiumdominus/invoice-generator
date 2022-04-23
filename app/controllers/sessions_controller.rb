@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  def index
+  def new
     if session[:current_user_token] == '123456'
       redirect_to(invoices_path)
     end

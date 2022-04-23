@@ -11,9 +11,20 @@
   </head>
 
   <body>
-    <% if session[:current_user_token] %>
-      <p style="text-align: right"><%= button_to('Log Out', sessions_path, method: :delete) %></p>
-    <% end %>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Invoice Generator</a>
+        <div class="d-flex align-items-center justify-content-end">
+          <% if session[:current_user_token] %>
+            <%= button_to('Log Out', sessions_path, method: :delete, class: 'btn btn-outline-danger') %>
+          <% else %>
+            <%= link_to 'New Token', new_token_path, class: 'btn btn-success me-3' %>
+            <%= link_to 'Login', new_sessions_path, class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    
     <%= yield %>
   </body>
 </html>

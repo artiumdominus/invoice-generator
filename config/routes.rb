@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root "sessions#index"
+  root "sessions#new"
 
-  resource :sessions, only: [:index, :create, :destroy]
+  resource :sessions, only: [:new, :create, :destroy]
 
   resources :tokens, only: [:new, :create] do
     member do

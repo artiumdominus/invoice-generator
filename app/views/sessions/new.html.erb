@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-body">
+    <div style="color: red;"><%= notice %></div>
+
+    <%= form_with url: sessions_path do |f| %>
+      <div class="mb-3">
+        <%= f.label :token, class: 'form-label' %>
+        <%= f.text_field :token, class: 'form-control', :'aria-describedby' => 'tokenHelp' %>
+      </div>
+      <%= f.submit 'Confirm', class: 'btn btn-dark' %>
+    <% end %>
+  </div>
+</div>
