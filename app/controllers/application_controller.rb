@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     Tokens::UseCases::Authenticate[code: current_user_token]
   end
 
+  helper_method :current_user
   def current_user = @current_user
   def current_user_token = @current_user_token ||= session[:current_user_token]
 end

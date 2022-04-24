@@ -5,8 +5,6 @@ class TokensController < ApplicationController
   def new; end
 
   def create
-    # TODO: email.present?
-
     case Tokens::UseCases::Generate[email:]
     in { ok: data }
       redirect_to new_token_path, { notice: "Token created with success, access your email to validate your token." }

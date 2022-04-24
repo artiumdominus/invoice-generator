@@ -1,9 +1,9 @@
 class ApplicationService
 
-  def self.[](*args, **kwargs)
+  def self.[](**kwargs)
     @callable.nil? ?
-      self.new.call(*args, **kwargs) :
-      @callable[*args, **kwargs]
+      self.new.call(**kwargs) :
+      @callable[**kwargs]
   end
 
   def self.is(callable)
@@ -12,8 +12,8 @@ class ApplicationService
 
   def self.>>(callable)
     Class.new(self).tap do |klass|
-      klass.is -> (*args, **kwargs) do
-        case self[*args, **kwargs]
+      klass.is -> (**kwargs) do
+        case self[**kwargs]
         in { ok: data }
           callable[**data]
         in { error: }
@@ -22,5 +22,4 @@ class ApplicationService
       end
     end
   end
-  # TODO: Sholud I remove the possibility of *args?
 end
