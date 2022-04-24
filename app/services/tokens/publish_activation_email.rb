@@ -1,5 +1,5 @@
 module Tokens
-  class EnqueueActivationEmail < ApplicationService # PubActivationEmail
+  class PublishActivationEmail < ApplicationService
     def call(token:)
       TokenMailer.with(token:).activation.deliver_later
 

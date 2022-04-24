@@ -1,7 +1,5 @@
 class InvoicesController < ApplicationController
-  before_action do
-    redirect_to(root_path, notice: 'Acesso não autorizado!') if request.format.html? && !session[:current_user_token]
-  end
+  before_action :authenticate!, except: :show
 
   before_action :set_invoice, only: %i[ show edit update destroy ]
 

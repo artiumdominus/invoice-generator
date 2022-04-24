@@ -1,4 +1,7 @@
 class TokensController < ApplicationController
+  before_action :authenticated?, only: :new
+
+  def index = redirect_to(new_token_path)
   def new; end
 
   def create

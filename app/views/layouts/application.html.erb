@@ -15,7 +15,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Invoice Generator</a>
         <div class="d-flex align-items-center justify-content-end">
-          <% if session[:current_user_token] %>
+          <% if current_user %>
             <%= button_to('Log Out', sessions_path, method: :delete, class: 'btn btn-outline-danger') %>
           <% else %>
             <%= link_to 'New Token', new_token_path, class: 'btn btn-success me-3' %>

@@ -1,17 +1,17 @@
 class SessionsController < ApplicationController
-  def new
-    if session[:current_user_token] == '123456'
-      redirect_to(invoices_path)
-    end
-  end
+  before_action :authenticated?, only: :new
+
+  def show = redirect_to(new_sessions_path)
+  def new; end
 
   def create
-    if params[:token] == '123456'
-      session[:current_user_token] = params[:token]
+    case Tokens::UseCases::Authenticate[code:]
+    in { ok: data }
+      session[:current_user_token] = code
 
-      redirect_to(invoices_path, notice: "Token válido")
-    else
-      redirect_to(root_path, notice: "Token inválido")
+      redirect_to(invoices_path, notice: "Valid Token")
+    in { error: }
+      redirect_to(root_path, notice: "Invalid Token")
     end
   end
 
@@ -20,4 +20,8 @@ class SessionsController < ApplicationController
 
     redirect_to(root_path)
   end
+
+  private
+
+  def code = @code ||= params[:token]
 end
