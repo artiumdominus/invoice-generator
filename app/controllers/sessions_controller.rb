@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    case Tokens::UseCases::Authenticate[code:]
+    case Tokens::UseCases::Login[code:]
     in { ok: data }
       session[:current_user_token] = code
 

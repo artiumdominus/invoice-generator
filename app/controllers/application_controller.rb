@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    Tokens::UseCases::Authenticate[code: current_user_token]
+    Tokens::Authenticate[code: current_user_token]
   end
 
   helper_method :current_user

@@ -17,7 +17,7 @@ class ApplicationService
         in { ok: data }
           callable[**data]
         in { error: }
-          error
+          { error: }
         end
       end
     end
