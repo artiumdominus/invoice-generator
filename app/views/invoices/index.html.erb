@@ -18,24 +18,18 @@
         <tbody>
           <% @invoices.each do |invoice| %>
             <tr>
-              <th scope="row"><%= invoice.invoice_number %></th>
-              <td><%= invoice.invoice_date %></td>
-              <td><%= invoice.total_amount_due %></td>
+              <th scope="row"><%= invoice.number %></th>
+              <td><%= invoice.date %></td>
+              <td><%= invoice.total_amount_due_cents %></td>
               <td><%= invoice.customer_name %></td>
+              <td>
+                <%= link_to 'show', invoice, type: 'button', class: 'btn btn-outline-info' %>
+              </td>
             <tr>
           <% end %>
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div id="invoices">
-    <% @invoices.each do |invoice| %>
-      <%= render invoice %>
-      <p>
-        <%= link_to "Show this invoice", invoice %>
-      </p>
-    <% end %>
   </div>
 
   <%= link_to "New invoice", new_invoice_path %>

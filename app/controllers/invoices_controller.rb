@@ -4,8 +4,7 @@ class InvoicesController < ApplicationController
   before_action :set_invoice, only: %i[ show edit update destroy ]
 
   def index
-    @invoices = Invoice.all
-    # @invoices = Invoices::List[user: current_user, filters:]
+    @invoices = Invoices::List[user: current_user, filters:]
   end
 
   def show
@@ -16,8 +15,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @invoice = Invoice.new(invoice_params)
@@ -71,6 +69,8 @@ class InvoicesController < ApplicationController
     end
 
     def invoice_params
-      params.require(:invoice).permit(:invoice_number, :invoice_date, :customer_name, :customer_notes, :total_amount_due, :emails)
+      params.require(:invoice).permit(:number, :date, :customer_name, :customer_notes, :total_amount_due, :emails)
     end
+
+    def filters = {}
 end
