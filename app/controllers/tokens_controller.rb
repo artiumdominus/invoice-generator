@@ -10,7 +10,7 @@ class TokensController < ApplicationController
       redirect_to new_token_path, { notice: "Token created with success, access your email to validate your token." }
     in { error: }
       @error = error
-      # TODO: deal error
+      # TODO: deal error -> redirect with notice
     end
   end
 
@@ -22,7 +22,7 @@ class TokensController < ApplicationController
       redirect_to(invoices_path, notice: "Welcome.")
     in { error: }
       @error = error
-      # TODO: deal error 
+      # TODO: deal error -> redirect 403
     end
   end
 

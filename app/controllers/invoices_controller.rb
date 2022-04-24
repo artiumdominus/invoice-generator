@@ -1,20 +1,21 @@
 class InvoicesController < ApplicationController
   before_action :authenticate!, except: :show
 
-  before_action :set_invoice, only: %i[ show edit update destroy ]
+  before_action :set_invoice, only: %i[ edit update destroy ]
 
-  def index
-    @invoices = Invoices::List[user: current_user, filters:]
-  end
+  def index = @invoices = Invoices::List[user: current_user, filters:]
+  # TODO: implement filters
 
   def show
-    # @invoice = Invoices::Find[id:]
+    case Invoices::Find[id:]
+    in { ok: { invoice: } }
+      @invoice = invoice
+    in { error: :invoice_not_found }
+      # TODO: deal :invoice_not_found -> redirect 404
+    end
   end
 
-  def new
-    @invoice = Invoice.new
-  end
-
+  def new = @invoice = Invoice::Changeset[]
   def edit; end
 
   def create
@@ -30,7 +31,7 @@ class InvoicesController < ApplicationController
       end
     end
 
-    #@invoice = Invoices::UseCases::Issue[user: current_user, invoice:]
+    # @invoice = Invoices::UseCases::Issue[user: current_user, invoice:]
   end
 
   def update
@@ -72,5 +73,6 @@ class InvoicesController < ApplicationController
       params.require(:invoice).permit(:number, :date, :customer_name, :customer_notes, :total_amount_due, :emails)
     end
 
+    def id = params[:id]
     def filters = {}
 end
