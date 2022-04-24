@@ -7,7 +7,7 @@ class TokensController < ApplicationController
 
     case Tokens::UseCases::Generate[email:]
     in { ok: data }
-      redirect_to root_path, { notice: "Token created with success" }
+      redirect_to new_token_path, { notice: "Token created with success, access your email to validate your token." }
     in { error: }
       @error = error
       # TODO: deal error

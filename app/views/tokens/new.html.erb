@@ -1,5 +1,7 @@
 <div class="card">
   <div class="card-body">
+    <div style="color: red;"><%= notice %></div>
+
     <%= form_with url: tokens_path do |f| %>
       <div class="mb-3">
         <%= f.label :email, class: 'form-label' %>
