@@ -2,8 +2,7 @@ class TokensController < ApplicationController
   def new; end
 
   def create
-    email = params[:email]
-    puts({ email: })
+    # TODO: email.present?
 
     case Tokens::UseCases::Generate[email:]
     in { ok: data }
@@ -15,9 +14,19 @@ class TokensController < ApplicationController
   end
 
   def activate
+    case Tokens::UseCases::Activate[code:]
+    in { ok: { token: } }
+      session[:current_user_token] = token.id
+
+      redirect_to(invoices_path, notice: "Welcome.")
+    in { error: }
+      @error = error
+      # TODO: deal error 
+    end
   end
 
   private
 
   def email = params[:email]
+  def code = params[:id]
 end
