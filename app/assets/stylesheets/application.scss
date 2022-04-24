@@ -1,1 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
+
+.home.container {
+  padding-right: var(--bs-gutter-x, 10rem);
+  padding-left: var(--bs-gutter-x, 10rem);
+}

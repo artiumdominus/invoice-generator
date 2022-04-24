@@ -1,13 +1,20 @@
-<div class="card">
-  <div class="card-body">
-    <div style="color: red;"><%= notice %></div>
+<div class="home container mt-4">
 
-    <%= form_with url: sessions_path do |f| %>
-      <div class="mb-3">
-        <%= f.label :token, class: 'form-label' %>
-        <%= f.text_field :token, class: 'form-control', :'aria-describedby' => 'tokenHelp' %>
-      </div>
-      <%= f.submit 'Confirm', class: 'btn btn-dark' %>
-    <% end %>
+  <h1>Login</h1>
+
+  <div class="card">
+    <div class="card-body">
+      <%= form_with url: sessions_path do |f| %>
+        <div class="mb-3">
+          <%= f.label :token, class: 'form-label' %>
+          <%= f.text_field :token, class: 'form-control', :'aria-describedby' => 'tokenHelp' %>
+        </div>
+        <%= f.submit 'Confirm', class: 'btn btn-dark' %>
+      <% end %>
+    </div>
   </div>
+  <% if notice %>
+    <div class="alert alert-danger"><%= notice %></div>
+  <% end %>
+
 </div>

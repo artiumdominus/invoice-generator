@@ -1,9 +1,7 @@
 class ApplicationService
-
   def self.[](**kwargs)
-    @callable.nil? ?
-      self.new.call(**kwargs) :
-      @callable[**kwargs]
+    @callable ||= self.new.method(:call)
+    @callable[**kwargs]
   end
 
   def self.is(callable)

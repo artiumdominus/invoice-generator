@@ -1,14 +1,43 @@
-<p style="color: green"><%= notice %></p>
+<div class="home container mt-4">
 
-<h1>Invoices</h1>
+  <p style="color: green"><%= notice %></p>
 
-<div id="invoices">
-  <% @invoices.each do |invoice| %>
-    <%= render invoice %>
-    <p>
-      <%= link_to "Show this invoice", invoice %>
-    </p>
-  <% end %>
+  <div class="card">
+    <div class="card-body">
+      <h1>Invoices</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Total</th>
+            <th scope="col">Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @invoices.each do |invoice| %>
+            <tr>
+              <th scope="row"><%= invoice.invoice_number %></th>
+              <td><%= invoice.invoice_date %></td>
+              <td><%= invoice.total_amount_due %></td>
+              <td><%= invoice.customer_name %></td>
+            <tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="invoices">
+    <% @invoices.each do |invoice| %>
+      <%= render invoice %>
+      <p>
+        <%= link_to "Show this invoice", invoice %>
+      </p>
+    <% end %>
+  </div>
+
+  <%= link_to "New invoice", new_invoice_path %>
+
 </div>
-
-<%= link_to "New invoice", new_invoice_path %>

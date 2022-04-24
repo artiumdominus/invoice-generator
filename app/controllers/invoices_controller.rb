@@ -5,9 +5,11 @@ class InvoicesController < ApplicationController
 
   def index
     @invoices = Invoice.all
+    # @invoices = Invoices::List[user: current_user, filters:]
   end
 
   def show
+    # @invoice = Invoices::Find[id:]
   end
 
   def new
@@ -29,6 +31,8 @@ class InvoicesController < ApplicationController
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
+
+    #@invoice = Invoices::UseCases::Issue[user: current_user, invoice:]
   end
 
   def update
@@ -41,6 +45,8 @@ class InvoicesController < ApplicationController
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
+
+    #Invoices::UseCases::SendToMoreEmails[user: current_user, invoice:, emails:]
   end
 
   def destroy

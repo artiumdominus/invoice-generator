@@ -1,14 +1,18 @@
-<div class="card">
-  <div class="card-body">
-    <div style="color: red;"><%= notice %></div>
+<div class="home container mt-4">
 
-    <%= form_with url: tokens_path do |f| %>
-      <div class="mb-3">
-        <%= f.label :email, class: 'form-label' %>
-        <%= f.email_field :email, class: 'form-control', :'aria-describedby' => 'emailHelp' %>
-        <div id="emailHelp" class="form-text">You will receive an email to validate your new Token.</div>
-      </div>
-      <%= f.submit 'Confirm', class: 'btn btn-dark' %>
-    <% end %>
+  <div class="card">
+    <div class="card-body">
+      <div style="color: red;"><%= notice %></div>
+
+      <%= form_with url: tokens_path do |f| %>
+        <div class="mb-3">
+          <%= f.label :email, class: 'form-label' %>
+          <%= f.email_field :email, class: 'form-control', :'aria-describedby' => 'emailHelp' %>
+          <div id="emailHelp" class="form-text">You will receive an email to validate your new Token.</div>
+        </div>
+        <%= f.submit 'Confirm', class: 'btn btn-dark' %>
+      <% end %>
+    </div>
   </div>
+
 </div>
