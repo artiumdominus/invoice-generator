@@ -1,0 +1,14 @@
+<h3>Here is your access token at <u>Invoice Generation</u></h3>
+
+<p><%= @token.id %></p>
+
+<p>
+  Please click
+  <%= link_to 'Here', activate_token_url(@token.id) %>
+  To activate your token.
+</p>
+
+<p>
+  If you don't asked for a new token, please ignore this message.
+</p>
+

@@ -43,3 +43,7 @@ bin/dev
 ```sh
 bin/rails spec
 ```
+
+### TODO
+
+- Criptografia no link de validar token

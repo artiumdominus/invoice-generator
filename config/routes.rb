@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :tokens, only: [:new, :create] do
     member do
-      post :activate
+      get :activate
     end
   end
   
