@@ -20,7 +20,7 @@
             <tr>
               <th scope="row"><%= invoice.number %></th>
               <td><%= invoice.date %></td>
-              <td><%= invoice.total_amount_due_cents %></td>
+              <td><%= invoice.total_amount_due %></td>
               <td><%= invoice.customer_name %></td>
               <td>
                 <%= link_to 'show', invoice, type: 'button', class: 'btn btn-outline-info' %>

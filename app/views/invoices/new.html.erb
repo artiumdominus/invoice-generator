@@ -1,9 +1,13 @@
-<h1>New invoice</h1>
+<div class="home container mt-4">
 
-<%= render "form", invoice: @invoice %>
+  <h1>Emit Invoice</h1>
 
-<br>
+  <%= render "form", invoice: @invoice %>
 
-<div>
-  <%= link_to "Back to invoices", invoices_path %>
+  <br>
+
+  <div>
+    <%= link_to "<< Back to invoices", invoices_path %>
+  </div>
+
 </div>

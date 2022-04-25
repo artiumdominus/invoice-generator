@@ -15,7 +15,7 @@ class InvoicesController < ApplicationController
     end
   end
 
-  def new = @invoice = Invoice::Changeset[]
+  def new = @invoice = Invoices::Changeset[]
   def edit; end
 
   def create

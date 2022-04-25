@@ -1,47 +1,57 @@
-<%= form_with(model: invoice) do |form| %>
-  <% if invoice.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+<div class="card">
+  <div class="card-body">
+    <%= form_with(model: invoice) do |f| %>
+      <% if invoice.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
 
-      <ul>
-        <% invoice.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% invoice.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div>
-    <%= form.label :number, style: "display: block" %>
-    <%= form.text_field :number %>
+      <div class="row mb-3">
+        <div class="col-6 col-lg-4">
+          <%= f.label :number, class: 'form-label' %>
+          <%= f.text_field :number, class: 'form-control' %>
+        </div>
+
+        <div class="col-6 col-lg-4">
+          <%= f.label :total_amount_due, class: 'form-label' %>
+          <%= f.text_field :total_amount_due, class: 'form-control' %>
+        </div>
+
+        <div class="col-auto">
+          <%= f.label :date, class: 'form-label' %>
+          <%= f.date_field :date, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div>
+          <%= f.label :customer_name, class: 'form-label' %>
+          <%= f.text_field :customer_name, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div>
+          <%= f.label :customer_notes, class: 'form-label' %>
+          <%= f.text_area :customer_notes, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div>
+          <%= f.label :emails, class: 'form-label' %>
+          <%= f.text_field :emails, class: 'form-control' %>
+        </div>
+      </div>
+
+      <%= f.submit 'Confirm', class: 'btn btn-dark' %>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :date, style: "display: block" %>
-    <%= form.date_field :date %>
-  </div>
-
-  <div>
-    <%= form.label :customer_name, style: "display: block" %>
-    <%= form.text_field :customer_name %>
-  </div>
-
-  <div>
-    <%= form.label :customer_notes, style: "display: block" %>
-    <%= form.text_area :customer_notes %>
-  </div>
-
-  <div>
-    <%= form.label :total_amount_due, style: "display: block" %>
-    <%= form.text_field :total_amount_due %>
-  </div>
-
-  <div>
-    <%= form.label :emails, style: "display: block" %>
-    <%= form.text_field :emails %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

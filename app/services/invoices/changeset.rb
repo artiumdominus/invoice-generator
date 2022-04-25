@@ -1,5 +1,5 @@
 module Invoices
-  class Changeset
+  class Changeset < ApplicationService
     def call = Invoice.new
   end
 end
