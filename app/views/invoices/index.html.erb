@@ -1,10 +1,16 @@
 <div class="home container mt-4">
 
+  <h1>Invoices</h1>
+
   <p style="color: green"><%= notice %></p>
 
   <div class="card">
     <div class="card-body">
-      <h1>Invoices</h1>
+      <div class="d-flex align-items-center justify-content-between">
+        <h1></h1>
+
+        <%= link_to "New invoice", new_invoice_path, class: 'btn btn-outline-success' %>
+      </div>
 
       <table class="table">
         <thead>
@@ -31,7 +37,5 @@
       </table>
     </div>
   </div>
-
-  <%= link_to "New invoice", new_invoice_path %>
 
 </div>
