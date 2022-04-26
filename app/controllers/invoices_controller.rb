@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :authenticate!, except: :show
+  before_action :authenticate, only: :show
 
   def index = @invoices = Invoices::List[user: current_user, filters:]
   # TODO: implement filters
@@ -14,13 +15,12 @@ class InvoicesController < ApplicationController
   end
 
   def new = @invoice = Invoices::Changeset[]
-  def edit; end
 
   def create
     # @invoice = Invoices::UseCases::Issue[user: current_user, invoice:]
     case Invoices::UseCases::Issue[user: current_user, invoice:]
-    in { ok: { success: } }
-      redirect_to invoice_url, notice: "Invoice was successfully issued."
+    in { ok: { invoice: } }
+      redirect_to invoice_url(invoice), notice: "Invoice was successfully issued."
     in { error: }
       # TODO: deal errors
     end
@@ -38,7 +38,18 @@ class InvoicesController < ApplicationController
     # end
   end
 
+  def edit
+    case Invoices::Find[id:]
+    in { ok: { invoice: } }
+      @invoice = invoice
+    in { error: :invoice_not_found }
+      # TODO: deal :invoice_not_found -> redirect 404
+    end
+  end
+
   def update
+    #Invoices::UseCases::SendToMoreEmails[user: current_user, invoice:, emails:]
+
     respond_to do |format|
       if @invoice.update(invoice_params)
         format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully updated." }
@@ -48,8 +59,24 @@ class InvoicesController < ApplicationController
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
+  end
 
-    #Invoices::UseCases::SendToMoreEmails[user: current_user, invoice:, emails:]
+  def download
+    case Invoices::Find[id:]
+    in { ok: { invoice: } }
+      @invoice = invoice
+
+      render pdf: "Invoice No. #{@invoice.id}",
+        page_size: 'A4',
+        # template: "invoices/download.html.erb",
+        layout: "pdf",
+        orientation: "Landscape",
+        lowquality: true,
+        zoom: 1,
+        dpi: 75
+    in { error: }
+      # TODO: deal error
+    end
   end
 
   private

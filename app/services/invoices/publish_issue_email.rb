@@ -1,9 +1,9 @@
 module Invoices
   class PublishIssueEmail < ApplicationService
     def call(invoice:)
-      InvoiceMailer.with(invoice:).created.deliver_later
+      SendInvoiceEmailJob.perform_later(invoice:)
 
-      { ok: { success: true } }
+      { ok: { invoice: } }
     end
   end
 end

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     if !current_user_token
       redirect_to(root_path, notice: "Not Authorized") 
     else
-      case authenticate
+      case authenticate_by_token
       in { ok: { user: } }
         @current_user = user
       in { error: }
@@ -14,14 +14,18 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticated?
-    if current_user_token && authenticate in { ok: { user: } }
+    if current_user_token && authenticate_by_token in { ok: { user: } }
       redirect_to(invoices_path)
     end
   end
 
   def authenticate
-    Tokens::Authenticate[code: current_user_token]
+    if current_user_token && authenticate_by_token in { ok: { user: } }
+      @current_user = user
+    end
   end
+
+  def authenticate_by_token = Tokens::Authenticate[code: current_user_token]
 
   helper_method :current_user
   def current_user = @current_user

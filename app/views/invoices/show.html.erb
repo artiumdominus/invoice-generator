@@ -5,6 +5,5 @@
 <div>
   <%= link_to "Edit this invoice", edit_invoice_path(@invoice) %> |
   <%= link_to "Back to invoices", invoices_path %>
-
-  <%= button_to "Destroy this invoice", @invoice, method: :delete %>
 </div>
+<%= link_to "Download", download_invoice_path(@invoice), download: 'invoice.pdf' %>

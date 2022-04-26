@@ -11,6 +11,9 @@
   - npm `>= 8.0`
   - yarn `>= 1.22.0`
 - Postgresql
+- wkhtmltopdf
+  `sudo apt get wkhtmltopdf` For Debian based OS, or:
+  https://wkhtmltopdf.org/ Download here. 
 
 ### Preparando ambiente de desenvolvimento
 

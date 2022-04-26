@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :invoices, except: :destroy
+  resources :invoices, except: :destroy do
+    member do
+      get :download
+    end
+  end
 
   namespace :api do
     namespace :v1 do
