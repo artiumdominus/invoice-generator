@@ -1,6 +1,14 @@
-<h1>Editing invoice</h1>
+<p style="color: green"><%= notice %></p>
 
-<%= render "form", invoice: @invoice %>
+<%= render @invoice %>
+
+<%= form_with url: invoice_path(@invoice), method: :put do |f| %>
+  <div>
+    <%= f.label :emails, class: 'form-label' %>
+    <%= f.text_field :emails, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Confirm', class: 'btn btn-dark' %>
+<% end %>
 
 <br>
 

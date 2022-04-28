@@ -1,6 +1,7 @@
 class InvoiceMailer < ApplicationMailer
   def created
     @invoice = params[:invoice]
+    emails = params[:emails].empty? ? @invoice.emails : params[:emails]
 
     pdf_title = "invoice_#{@invoice.date.strftime('%Y%m%d')}_#{@invoice.id}.pdf"
     attachments[pdf_title] = WickedPdf.new.pdf_from_string(
@@ -16,6 +17,6 @@ class InvoiceMailer < ApplicationMailer
       )
     )
 
-    mail(to: @invoice.emails, subject: "Invoice #{@invoice.id}")
+    mail(to: emails, subject: "Invoice #{@invoice.id}")
   end
 end

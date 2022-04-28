@@ -1,7 +1,7 @@
 module Invoices
   class PublishIssueEmail < ApplicationService
-    def call(invoice:)
-      SendInvoiceEmailJob.perform_later(invoice:)
+    def call(invoice:, emails: [])
+      SendInvoiceEmailJob.perform_later(invoice:, emails:)
 
       { ok: { invoice: } }
     end

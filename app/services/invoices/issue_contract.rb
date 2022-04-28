@@ -1,5 +1,8 @@
 module Invoices
   class IssueContract < ApplicationService
+    def initialize = @errors = {}
+    def error!(error) = @errors.merge!(error)
+
     def call(user:, invoice:)
       @user, @invoice = user, invoice
       @errors = {}
@@ -55,7 +58,7 @@ module Invoices
     end
 
     def validate_emails
-      @emails = @invoice[:emails].split(/[ ,;]/)
+      @emails = @invoice[:emails].split(/[ ,;]/).reject(&:empty?)
       @emails.each do |email|
         unless email in URI::MailTo::EMAIL_REGEXP
           error!(emails: { invalid_format: [] }) unless @errors[:emails]
@@ -63,7 +66,5 @@ module Invoices
         end
       end
     end
-
-    def error!(error) = @errors.merge!(error)
   end
 end

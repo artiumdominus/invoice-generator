@@ -39,7 +39,7 @@ class InvoicesController < ApplicationController
   end
 
   def edit
-    case Invoices::Find[id:]
+    case Invoices::FindOfUser[user: current_user, id:]
     in { ok: { invoice: } }
       @invoice = invoice
     in { error: :invoice_not_found }
@@ -48,17 +48,22 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    #Invoices::UseCases::SendToMoreEmails[user: current_user, invoice:, emails:]
-
-    respond_to do |format|
-      if @invoice.update(invoice_params)
-        format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully updated." }
-        format.json { render :show, status: :ok, location: @invoice }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
-      end
+    case Invoices::UseCases::SendToMoreEmails[user: current_user, id:, emails:]
+    in { ok: }
+      redirect_to edit_invoice_path, { notice: "Invoice sent to the new emails" }
+    in { error: }
+      # TODO: deal errors
     end
+
+    # respond_to do |format|
+    #   if @invoice.update(invoice_params)
+    #     format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully updated." }
+    #     format.json { render :show, status: :ok, location: @invoice }
+    #   else
+    #     format.html { render :edit, status: :unprocessable_entity }
+    #     format.json { render json: @invoice.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   def download
@@ -68,7 +73,6 @@ class InvoicesController < ApplicationController
 
       render pdf: "Invoice No. #{@invoice.id}",
         page_size: 'A4',
-        # template: "invoices/download.html.erb",
         layout: "pdf",
         orientation: "Landscape",
         lowquality: true,
@@ -96,4 +100,6 @@ class InvoicesController < ApplicationController
           :emails
         )
     end
+
+    def emails = params[:emails]
 end

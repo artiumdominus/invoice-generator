@@ -3,7 +3,7 @@
 <%= render @invoice %>
 
 <div>
-  <%= link_to "Edit this invoice", edit_invoice_path(@invoice) %> |
+  <%= link_to "Send to more emails", edit_invoice_path(@invoice) %> |
   <%= link_to "Back to invoices", invoices_path %>
 </div>
 <%= link_to "Download", download_invoice_path(@invoice), download: 'invoice.pdf' %>

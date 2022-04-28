@@ -1,5 +1,6 @@
 class ApplicationService
   def self.[](**kwargs)
+    "> Calling #{self.name || "()"} with #{kwargs.inspect}"
     @callable ?
       @callable[**kwargs] :
       self.new.call(**kwargs)
@@ -9,19 +10,16 @@ class ApplicationService
     @callable = callable
   end
 
-  COMPOSITIONS = {}
-
   def self.>>(callable)
-    COMPOSITIONS[callable] ||=
-      Class.new(self).tap do |klass|
-        klass.is -> (**kwargs) do
-          case self[**kwargs]
-          in { ok: data }
-            callable[**data]
-          in { error: }
-            { error: }
-          end
+    Class.new(self).tap do |klass|
+      klass.is -> (**kwargs) do
+        case self[**kwargs]
+        in { ok: data }
+          callable[**data]
+        in { error: }
+          { error: }
         end
       end
+    end
   end
 end

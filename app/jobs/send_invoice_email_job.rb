@@ -1,7 +1,7 @@
 class SendInvoiceEmailJob < ApplicationJob
   queue_as :default
 
-  def perform(invoice:)
-    InvoiceMailer.with(invoice:).created.deliver_now
+  def perform(invoice:, emails: [])
+    InvoiceMailer.with(invoice:, emails:).created.deliver_now
   end
 end
