@@ -31,8 +31,8 @@ RSpec.describe InvoicesController, type: :routing do
       expect(patch: "/invoices/1").to route_to("invoices#update", id: "1")
     end
 
-    it "routes to #destroy" do
-      expect(delete: "/invoices/1").to route_to("invoices#destroy", id: "1")
-    end
+    # it "routes to #destroy" do
+    #   expect(delete: "/invoices/1").to route_to("invoices#destroy", id: "1")
+    # end
   end
 end
