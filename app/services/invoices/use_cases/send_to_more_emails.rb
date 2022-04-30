@@ -1,6 +1,6 @@
 module Invoices::UseCases
   class SendToMoreEmails < ApplicationService
-    is Invoices::SendToMoreEmailsContract >>
+    is Invoices::SendToMoreEmails::Contract >>
       -> user:, id:, emails: do
         case Invoices::FindOfUser[user:, id:]
         in { ok: { invoice: } }

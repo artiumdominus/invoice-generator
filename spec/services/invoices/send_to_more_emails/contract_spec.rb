@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe Invoices::SendToMoreEmailsContract do
+RSpec.describe Invoices::SendToMoreEmails::Contract do
   pending "add some examples to (or delete) #{__FILE__}"
 end

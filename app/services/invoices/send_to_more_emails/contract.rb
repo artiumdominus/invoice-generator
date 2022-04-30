@@ -1,5 +1,5 @@
-module Invoices
-  class SendToMoreEmailsContract < ApplicationService
+module Invoices::SendToMoreEmails
+  class Contract < ApplicationService
     def initialize = @errors = {}
     def error!(error) = @errors.merge!(error)
 

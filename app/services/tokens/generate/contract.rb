@@ -1,5 +1,5 @@
-module Tokens
-  class GenerateContract < ApplicationService
+module Tokens::Generate
+  class Contract < ApplicationService
     def call(email:)
       if (email in String) && email in URI::MailTo::EMAIL_REGEXP
         { ok: { email: } }

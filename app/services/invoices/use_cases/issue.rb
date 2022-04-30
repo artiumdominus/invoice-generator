@@ -1,6 +1,6 @@
 module Invoices::UseCases
   class Issue < ApplicationService
-    is Invoices::IssueContract >>
+    is Invoices::Issue::Contract >>
        Invoices::Create >>
        Invoices::PublishIssueEmail
   end

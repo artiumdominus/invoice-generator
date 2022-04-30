@@ -1,5 +1,5 @@
-module Tokens
-  class ActivateContract < ApplicationService
+module Tokens::Activate
+  class Contract < ApplicationService
     def call(code:)
       token = Token.find(code)
 

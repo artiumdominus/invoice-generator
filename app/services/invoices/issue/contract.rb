@@ -1,5 +1,5 @@
-module Invoices
-  class IssueContract < ApplicationService
+module Invoices::Issue
+  class Contract < ApplicationService
     def initialize = @errors = {}
     def error!(error) = @errors.merge!(error)
 

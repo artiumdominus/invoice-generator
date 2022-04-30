@@ -1,6 +1,6 @@
 module Tokens::UseCases
   class Generate < ApplicationService
-    is Tokens::GenerateContract >>
+    is Tokens::Generate::Contract >>
        Users::FindOrCreate >>
        Tokens::Create >>
        Tokens::PublishActivationEmail
