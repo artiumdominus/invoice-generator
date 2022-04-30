@@ -30,39 +30,57 @@ module Invoices
     private
 
     def validate_number
-      if Invoice.where(user: @user, number: @invoice[:number]).count > 0
+      if @invoice[:number].blank?
+        error!(number: :required)
+      elsif Invoice.where(user: @user, number: @invoice[:number]).count > 0
         error!(number: :already_in_use)
       end
     end
 
     def validate_date
-      parsed = Date.parse(@invoice[:date])
-    rescue Date::Error
-      error!(date: :invalid_format)
-    else
-      @parsed_date = parsed
+      if @invoice[:date].blank?
+        error!(date: :required)
+      else
+        begin
+          parsed = Date.parse(@invoice[:date])
+        rescue Date::Error
+          error!(date: :invalid_format)
+        else
+          @parsed_date = parsed
+        end
+      end
     end
 
     def validate_customer_name
-      if @invoice[:customer_name].empty?
-        error!(customer_name: :empty)
+      if @invoice[:customer_name].blank?
+        error!(customer_name: :required)
       end
     end
 
     def validate_total_amount_due
-      total = Float(@invoice[:total_amount_due])
-    rescue ArgumentError
-      error!(total_amount_due: :invalid_format)
-    else
-      @total_amount_due_cents = total * 100
+      if @invoice[:total_amount_due].blank?
+        error!(total_amount_due: :required)
+      else
+        begin
+          total = Float(@invoice[:total_amount_due])
+        rescue ArgumentError
+          error!(total_amount_due: :invalid_format)
+        else
+          @total_amount_due_cents = total * 100
+        end
+      end
     end
 
     def validate_emails
-      @emails = @invoice[:emails].split(/[ ,;]/).reject(&:empty?)
-      @emails.each do |email|
-        unless email in URI::MailTo::EMAIL_REGEXP
-          error!(emails: { invalid_format: [] }) unless @errors[:emails]
-          @errors[:emails][:invalid_format] << email
+      if @invoice[:emails].blank?
+        error!(emails: :required)
+      else
+        @emails = @invoice[:emails].split(/[ ,;]/).reject(&:empty?)
+        @emails.each do |email|
+          unless email in URI::MailTo::EMAIL_REGEXP
+            error!(emails: { invalid_format: [] }) unless @errors[:emails]
+            @errors[:emails][:invalid_format] << email
+          end
         end
       end
     end

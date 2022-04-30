@@ -1,49 +1,39 @@
 class InvoicesController < ApplicationController
-  before_action :authenticate!, except: :show
+  before_action :authenticate!, except: %i(show not_found)
   before_action :authenticate, only: :show
 
   def index = @invoices = Invoices::List[user: current_user, filters:]
-  # TODO: implement filters
+  # TODO: implement filters & pagination
 
   def show
     case Invoices::Find[id:]
     in { ok: { invoice: } }
       @invoice = invoice
     in { error: :invoice_not_found }
-      # TODO: deal :invoice_not_found -> redirect 404
+      redirect_to not_found_invoices_path
     end
   end
 
   def new = @invoice = Invoices::Changeset[]
 
   def create
-    # @invoice = Invoices::UseCases::Issue[user: current_user, invoice:]
     case Invoices::UseCases::Issue[user: current_user, invoice:]
     in { ok: { invoice: } }
       redirect_to invoice_url(invoice), notice: "Invoice was successfully issued."
-    in { error: }
-      # TODO: deal errors
+    in { error: errors }
+      @invoice = Invoices::Changeset[invoice: @invoice]
+      @errors = errors
+      render :new, status: :unprocessable_entity
     end
-
-    # @invoice = Invoice.new(invoice_params)
-
-    # respond_to do |format|
-    #   if @invoice.save
-    #     format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully created." }
-    #     format.json { render :show, status: :created, location: @invoice }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @invoice.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
+  # TODO: deal deeper errors
 
   def edit
     case Invoices::FindOfUser[user: current_user, id:]
     in { ok: { invoice: } }
       @invoice = invoice
     in { error: :invoice_not_found }
-      # TODO: deal :invoice_not_found -> redirect 404
+      redirect_to not_found_invoices_path
     end
   end
 
@@ -51,27 +41,28 @@ class InvoicesController < ApplicationController
     case Invoices::UseCases::SendToMoreEmails[user: current_user, id:, emails:]
     in { ok: }
       redirect_to edit_invoice_path, { notice: "Invoice sent to the new emails" }
-    in { error: }
-      # TODO: deal errors
+    in { error: :invoice_of_user_not_found }
+      redirect_to not_found_invoices_path
+    in { error: errors }
+      case Invoices::FindOfUser[user: current_user, id:]
+      in { ok: { invoice: } }
+        @invoice = invoice
+        @emails = emails
+        @errors = errors
+        render :edit, status: :unprocessable_entity
+      in { error: :invoice_not_found } 
+        redirect_to not_found_invoices_path
+      end
     end
-
-    # respond_to do |format|
-    #   if @invoice.update(invoice_params)
-    #     format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully updated." }
-    #     format.json { render :show, status: :ok, location: @invoice }
-    #   else
-    #     format.html { render :edit, status: :unprocessable_entity }
-    #     format.json { render json: @invoice.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
+  # TODO: deal deeper errors
 
   def download
     case Invoices::Find[id:]
     in { ok: { invoice: } }
       @invoice = invoice
 
-      render pdf: "Invoice No. #{@invoice.id}",
+      render pdf: @invoice.pdf_title,
         page_size: 'A4',
         layout: "pdf",
         orientation: "Landscape",
@@ -83,13 +74,15 @@ class InvoicesController < ApplicationController
     end
   end
 
+  def not_found; end
+
   private
 
     def id = params[:id]
     def filters = {}
 
     def invoice
-      params
+      @invoice ||= params
         .require(:invoice)
         .permit(
           :number,

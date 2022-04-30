@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   root "sessions#new"
 
-  resource :sessions, only: [:show, :new, :create, :destroy]
+  resource :sessions, only: %i(show new create destroy)
 
-  resources :tokens, only: [:index, :new, :create] do
+  resources :tokens, only: %i(index new create) do
     member do
       get :activate
     end
@@ -13,11 +13,14 @@ Rails.application.routes.draw do
     member do
       get :download
     end
+    collection do
+      get :not_found
+    end
   end
 
   namespace :api do
     namespace :v1 do
-      resources :invoices, except: [:new, :edit, :destroy]
+      resources :invoices, except: %i(new edit destroy)
     end
   end
 end

@@ -16,11 +16,15 @@ module Invoices
     end
 
     def validate_emails
-      @parsed_emails = @emails.split(/[ ,;]/).reject(&:empty?)
-      @parsed_emails.each do |email|
-        unless email in URI::MailTo::EMAIL_REGEXP
-          error!(emails: { invalid_format: [] }) unless @errors[:emails]
-          @error[:emails][:invalid_format] << email
+      if @emails.blank?
+        error!(emails: :required)
+      else
+        @parsed_emails = @emails.split(/[ ,;]/).reject(&:empty?)
+        @parsed_emails.each do |email|
+          unless email in URI::MailTo::EMAIL_REGEXP
+            error!(emails: { invalid_format: [] }) unless @errors[:emails]
+            @errors[:emails][:invalid_format] << email
+          end
         end
       end
     end

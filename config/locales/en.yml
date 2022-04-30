@@ -31,3 +31,32 @@
 
 en:
   hello: "Hello world"
+  tokens:
+    create:
+      email_invalid_format: Invalid format!
+      failure_in_user_creation: An error ocurred, try again in few minutes.
+      failure_in_token_creation: An error ocurred, try again in few minutes.
+    activate:
+      token_expired_to_activate: |
+        This token was generated more than 24 hours ago.
+        the activation period was expired
+      token_not_found: Token not found
+      failure_in_token_update: An error ocurred, try again in few minutes.
+  invoices:
+    create:
+      number:
+        required: Required
+        already_in_use: Already issued
+      date:
+        required: Required
+        invaild_format: Invalid format
+      customer_name:
+        required: Required
+      total_amount_due:
+        required: Required
+        invalid_format: Invalid format
+      emails:
+        required: Required
+    update:
+      emails:
+        required: Required

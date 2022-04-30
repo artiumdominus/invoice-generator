@@ -3,8 +3,7 @@ class InvoiceMailer < ApplicationMailer
     @invoice = params[:invoice]
     emails = params[:emails].empty? ? @invoice.emails : params[:emails]
 
-    pdf_title = "invoice_#{@invoice.date.strftime('%Y%m%d')}_#{@invoice.id}.pdf"
-    attachments[pdf_title] = WickedPdf.new.pdf_from_string(
+    attachments[@invoice.pdf_title] = WickedPdf.new.pdf_from_string(
       render_to_string(
         template: 'invoices/download',
         layout: 'pdf',

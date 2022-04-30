@@ -30,4 +30,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   def current_user = @current_user
   def current_user_token = @current_user_token ||= session[:current_user_token]
+
+  def alert!(error) = @alert = t("#{controller_name}.#{action_name}.#{error}")
 end

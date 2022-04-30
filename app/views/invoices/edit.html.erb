@@ -5,7 +5,8 @@
 <%= form_with url: invoice_path(@invoice), method: :put do |f| %>
   <div>
     <%= f.label :emails, class: 'form-label' %>
-    <%= f.text_field :emails, class: 'form-control' %>
+    <%= f.text_field :emails, class: "form-control#{' is-invalid' if @errors && @errors[:emails]}", value: @emails %>
+    <%= invalid_feedback_for(@errors, :emails) %>
   </div>
   <%= f.submit 'Confirm', class: 'btn btn-dark' %>
 <% end %>

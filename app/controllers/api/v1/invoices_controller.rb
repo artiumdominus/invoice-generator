@@ -1,12 +1,12 @@
 module Api::V1
   class InvoicesController < ActionController::API
     # TODO: API auth
-    # TODO: document API
+    # TODO: document API rswag
 
     def index
       render json: Invoices::List[user: current_user, filters:]
     end
-    # TODO: implement filters
+    # TODO: implement filters & pagination
 
     def show
       render json: Invoices::Find[id:]
