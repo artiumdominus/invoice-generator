@@ -6,7 +6,7 @@ RSpec.describe Tokens::Authenticate do
     let(:result) { described_class[code:] }
     
     context "when token is active" do
-      let(:token) { create :token, active: true }
+      let(:token) { create :token, :active }
 
       it { expect(result).to match({ ok: { user: User, token: Token } }) }
       it { expect(result.dig(:ok, :user)).to eq(result.dig(:ok, :token).user) }
@@ -25,7 +25,7 @@ RSpec.describe Tokens::Authenticate do
     end
 
     context "when failure" do
-      let!(:token) { create :token, active: true }
+      let!(:token) { create :token, :active }
 
       before { ActiveRecord::Base.remove_connection }
       after { ActiveRecord::Base.establish_connection }

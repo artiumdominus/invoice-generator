@@ -6,7 +6,7 @@ RSpec.describe Tokens::UseCases::Login do
     let(:result) { described_class[code:] }
 
     context "when happy path" do
-      let(:token) { create :token, active: true }
+      let(:token) { create :token, :active }
       let(:user) { token.user }
 
       it { expect(result).to match({ ok: { user: User, token: Token } }) }

@@ -1,6 +1,13 @@
 FactoryBot.define do
   factory(:user) { email { Faker::Internet.email } }
-  factory(:token) { user }
+
+  factory(:token) do
+    user
+
+    trait :active do
+      active { true }
+    end
+  end
 
   factory :invoice do
     sequence(:number)

@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Tokens::DeactivatePrevious do
   describe "::[]" do
     let!(:user) { create :user }
-    let!(:previous_lost_token) { create :token, user:, active: true, created_at: Date.current - 2.days }
-    let!(:previous_token) { create :token, user:, active: true, created_at: Date.current - 1.day }
+    let!(:previous_lost_token) { create :token, :active, user:, created_at: Date.current - 2.days }
+    let!(:previous_token) { create :token, :active, user:, created_at: Date.current - 1.day }
     let!(:token) { create :token, user: }
     
     let(:result) { described_class[token:] }
