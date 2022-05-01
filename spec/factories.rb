@@ -1,22 +1,24 @@
 FactoryBot.define do
-  factory :user do
-    email { Faker::Internet.email }
-  end
-
-  factory :token do
-    user
-  end
+  factory(:user) { email { Faker::Internet.email } }
+  factory(:token) { user }
 
   factory :invoice do
     sequence(:number)
+
+    transient do
+      street_address { Faker::Address.street_address }
+      city { Faker::Address.city }
+      zip { Faker::Address.zip }
+      duns_number { Faker::Company.duns_number }
+    end
 
     date { Date.current }
     customer_name { Faker::Company.name }
     customer_notes do
       <<-NOTES
-        address: #{Faker::Address.street_address} - #{Faker::Address.city}
-        zip: #{Faker::Address.zip}
-        phone: #{Faker::Company.duns_number}
+        address: #{street_address} - #{city}
+        zip: #{zip}
+        phone: #{duns_number}
       NOTES
     end
     total_amount_due_cents { rand(18_000_00..22_000_00) }

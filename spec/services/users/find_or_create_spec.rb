@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe Users::FindOrCreate do
   describe "::[]" do
     let(:email) { "user@example.com" }
-    let(:params) { { email: } }
-    let(:result) { described_class[**params] }
+    let(:result) { described_class[email:] }
 
     context "when success" do
       it { expect(result).to match({ ok: { user: User } }) }
@@ -19,6 +18,13 @@ RSpec.describe Users::FindOrCreate do
         it { expect(result.dig(:ok, :user)).to eq(user) }
         it { expect { result }.to change(User, :count).by(0) }
       end
+    end
+
+    context "when failure" do
+      before { ActiveRecord::Base.remove_connection }
+      after { ActiveRecord::Base.establish_connection }
+
+      it { expect(result).to match({ error: :failure_in_user_creation }) }
     end
   end
 end

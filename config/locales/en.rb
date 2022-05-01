@@ -1,12 +1,5 @@
 {
   en: {
-    salutation: -> key, options {
-      if options[:formal]
-        "Welcome %{name}"
-      else
-        "Hi %{name}!"
-      end
-    },
     invoices: {
       create: {
         emails: {
