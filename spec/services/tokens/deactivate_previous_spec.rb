@@ -17,7 +17,7 @@ RSpec.describe Tokens::DeactivatePrevious do
           .from(true).to(false)
       end
 
-      it "deactivate lost prevous token" do
+      it "deactivate lost previous token" do
         expect { result }.to change { previous_lost_token.reload.active }
           .from(true).to(false)
       end

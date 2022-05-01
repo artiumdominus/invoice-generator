@@ -8,6 +8,8 @@ module Tokens
       else
         { error: :token_not_found }
       end
+    rescue ActiveRecord::ActiveRecordError 
+      { error: :failure_in_token_authentication }
     end
   end
 end
