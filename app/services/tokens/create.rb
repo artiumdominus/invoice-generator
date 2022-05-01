@@ -4,7 +4,7 @@ module Tokens
       token = Token.create(user:)
 
       { ok: { token: } }
-    rescue ActiveRecord::ActiveRecordError 
+    rescue ActiveRecord::ActiveRecordError
       { error: :failure_in_token_creation }
     end
   end
