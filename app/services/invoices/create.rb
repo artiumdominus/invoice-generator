@@ -3,11 +3,9 @@ module Invoices
     def call(user:, invoice:)
       invoice = user.invoices.create(invoice)
 
-      if invoice.persisted?
-        { ok: { invoice: } }
-      else
-        { error: :failure_in_invoice_creation }
-      end
+      { ok: { invoice: } }
+    rescue ActiveRecord::ActiveRecordError
+      { error: :failure_in_invoice_creation }
     end
   end
 end

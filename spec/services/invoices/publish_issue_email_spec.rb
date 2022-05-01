@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Invoices::PublishIssueEmail do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "::[]" do
+    let!(:invoice) { create :invoice }
+    let(:result) { described_class[invoice:] }
+
+    context "when success" do
+      it { expect(result).to match({ ok: { invoice: } }) }
+      it { expect { result }.to have_enqueued_job(SendInvoiceEmailJob) }
+    end
+  end
 end
