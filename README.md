@@ -50,6 +50,7 @@ bin/rails spec
 ### TODO
 
 - Criptografia no link de validar token
+- Filtragem
 - Paginação
 - Specs para:
   - ApplicationHelper
@@ -58,3 +59,15 @@ bin/rails spec
   - sessions routes
   - tokens routes
   - request (InvoicesController, TokensController, SessionsController)
+  - testes Fuzzy
+- API
+  - padronizar retornos da API
+  - retornar códigos HTTP corretos
+  - documentar com rswag
+- Usar monetize para lidar com valores monetários (?)
+- + Programação defensiva
+- Webhook para subscrever invoices emitidas p/ meu email.
+- Caching
+- Melhorar o front-end (Tailwind? Bulma?)
+- Utilizar AJAX na listagem de invoices
+- Delegar geração do PDF para front-end no caso de download.
