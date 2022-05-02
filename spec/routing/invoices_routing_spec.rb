@@ -18,7 +18,6 @@ RSpec.describe InvoicesController, type: :routing do
       expect(get: "/invoices/1/edit").to route_to("invoices#edit", id: "1")
     end
 
-
     it "routes to #create" do
       expect(post: "/invoices").to route_to("invoices#create")
     end
@@ -31,8 +30,12 @@ RSpec.describe InvoicesController, type: :routing do
       expect(patch: "/invoices/1").to route_to("invoices#update", id: "1")
     end
 
-    # it "routes to #destroy" do
-    #   expect(delete: "/invoices/1").to route_to("invoices#destroy", id: "1")
-    # end
+    it "routes to #download" do
+      expect(get: "/invoices/1/download").to route_to("invoices#download", id: "1")
+    end
+
+    it "routes to #not_found" do
+      expect(get: "/invoices/not_found").to route_to("invoices#not_found")
+    end
   end
 end

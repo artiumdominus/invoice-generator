@@ -2,7 +2,7 @@ class InvoicesController < ApplicationController
   before_action :authenticate!, except: %i(show not_found)
   before_action :authenticate, only: :show
 
-  def index = @invoices = Invoices::List[user: current_user, filters:]
+  def index = @invoices = Invoices::List[user: current_user]
   # TODO: implement filters & pagination
 
   def show

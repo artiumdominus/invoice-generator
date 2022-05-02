@@ -1,6 +1,6 @@
 module Invoices
   class List < ApplicationService
-    def call(user:, filters:)
+    def call(user:)
       Invoice
         .where(user:)
         .to_a

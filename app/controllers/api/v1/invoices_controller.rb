@@ -4,7 +4,7 @@ module Api::V1
     # TODO: document API rswag
 
     def index
-      render json: Invoices::List[user: current_user, filters:]
+      render json: Invoices::List[user: current_user]
     end
     # TODO: implement filters & pagination
 

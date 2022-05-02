@@ -51,3 +51,10 @@ bin/rails spec
 
 - Criptografia no link de validar token
 - Paginação
+- Specs para:
+  - ApplicationHelper
+  - InvoiceMailer & TokenMailer
+  - ApplicationService
+  - sessions routes
+  - tokens routes
+  - request (InvoicesController, TokensController, SessionsController)
