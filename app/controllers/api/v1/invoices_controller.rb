@@ -1,6 +1,6 @@
 module Api::V1
-  class InvoicesController < ActionController::API
-    # TODO: API auth
+  class InvoicesController < Api::ApplicationController
+    before_action :authenticate!
     # TODO: document API rswag
 
     def index
@@ -26,16 +26,14 @@ module Api::V1
       def filters = {}
 
       def invoice
-        params
-          .require(:invoice)
-          .permit(
-            :number,
-            :date,
-            :customer_name,
-            :customer_notes,
-            :total_amount_due,
-            :emails
-          )
+        {
+          number: params[:number],
+          date: params[:date],
+          customer_name: params[:customer_name],
+          customer_notes: params[:customer_notes],
+          total_amount_due: params[:total_amount_due],
+          emails: params[:emails]
+        }
       end
 
       def emails = params[:emails]

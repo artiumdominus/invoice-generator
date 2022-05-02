@@ -18,9 +18,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # namespace :api do
-  #   namespace :v1 do
-  #     resources :invoices, except: %i(new edit destroy)
-  #   end
-  # end
+  namespace :api do
+    namespace :v1 do
+      resources :invoices, except: %i(new edit destroy)
+    end
+  end
 end
