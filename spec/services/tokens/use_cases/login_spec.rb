@@ -7,7 +7,6 @@ RSpec.describe Tokens::UseCases::Login do
 
     context "when happy path" do
       let(:token) { create :token, :active }
-      let(:user) { token.user }
 
       it { expect(result).to match({ ok: { user: User, token: Token } }) }
       
@@ -16,22 +15,16 @@ RSpec.describe Tokens::UseCases::Login do
         expect(result.dig(:ok, :token).last_login).to be > login_attempt_datetime
       end
 
-      it "authenticates the token" do
-        allow(Tokens::Authenticate)
-          .to receive(:[]).and_return({ ok: { user:, token: } })
-        
-        expect(Tokens::Authenticate).to receive(:[]).once
+      {
+        Tokens::Authenticate => "authenticates the token",
+        Tokens::SetLastLogin => "sets the last login"
+      }.each do |step, description|
+        it description do
+          allow(step).to receive(:[]).and_call_original
+          expect(step).to receive(:[]).once
 
-        result
-      end
-
-      it "sets the last login" do
-        allow(Tokens::SetLastLogin)
-          .to receive(:[]).and_return({ ok: { token: } })
-        
-        expect(Tokens::SetLastLogin).to receive(:[]).once
-
-        result
+          result
+        end
       end
     end
   end

@@ -24,31 +24,17 @@ RSpec.describe Invoices::UseCases::Issue do
       it { expect { result }.to change(Invoice, :count).by(1) }
       it { expect { result }.to have_enqueued_job(SendInvoiceEmailJob) }
 
-      it "validates the invoice attributes" do
-        allow(Invoices::Issue::Contract)
-          .to receive(:[]).and_return({ ok: { user:, invoice: attributes_for(:invoice) } })
+      {
+        Invoices::Issue::Contract => "validates the invoice attributes",
+        Invoices::Create => "creates the invoice",
+        Invoices::PublishIssueEmail => "sends the invoice to the responsible for payment"
+      }.each do |step, description|
+        it description do
+          allow(step).to receive(:[]).and_call_original
+          expect(step).to receive(:[]).once
 
-        expect(Invoices::Issue::Contract).to receive(:[]).once
-
-        result
-      end
-
-      it "creates the invoice" do
-        allow(Invoices::Create)
-          .to receive(:[]).and_return({ ok: { invoice: create(:invoice) } })
-
-        expect(Invoices::Create).to receive(:[]).once
-
-        result
-      end
-
-      it "sends the invoice to the responsible for payment" do
-        allow(Invoices::PublishIssueEmail)
-          .to receive(:[]).and_return({ ok: { invoice: create(:invoice) } })
-        
-        expect(Invoices::PublishIssueEmail).to receive(:[]).once
-
-        result
+          result
+        end
       end
     end
   end

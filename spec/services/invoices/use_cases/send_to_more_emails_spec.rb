@@ -15,40 +15,18 @@ RSpec.describe Invoices::UseCases::SendToMoreEmails do
       it { expect { result }.to change { invoice.reload.emails.length } }
       it { expect { result }.to have_enqueued_job(SendInvoiceEmailJob) }
 
-      it do
-        allow(Invoices::SendToMoreEmails::Contract)
-          .to receive(:[]).and_return({ ok: { user:, id:, emails: parsed_emails } })
-        
-        expect(Invoices::SendToMoreEmails::Contract).to receive(:[]).once
+      {
+        Invoices::SendToMoreEmails::Contract => "validates the new email addresses",
+        Invoices::FindOfUser => "retrieves the invoice",
+        Invoices::Update => "includes the new emails in the invoice",
+        Invoices::PublishIssueEmail => "send the invoice to the new emails"
+      }.each do |step, description|
+        it description do
+          allow(step).to receive(:[]).and_call_original
+          expect(step).to receive(:[]).once
 
-        result
-      end
-
-      it do
-        allow(Invoices::FindOfUser)
-          .to receive(:[]).and_return({ ok: { invoice: } })
-
-        expect(Invoices::FindOfUser).to receive(:[]).once
-
-        result
-      end
-
-      it do
-        allow(Invoices::Update)
-          .to receive(:[]).and_return({ ok: { invoice:, emails: } })
-
-        expect(Invoices::Update).to receive(:[]).once
-
-        result
-      end
-
-      it do
-        allow(Invoices::PublishIssueEmail)
-          .to receive(:[]).and_return({ ok: { invoice: } })
-
-        expect(Invoices::PublishIssueEmail).to receive(:[]).once
-
-        result
+          result
+        end
       end
     end
   end
